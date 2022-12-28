@@ -3,7 +3,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import HelloWorld from "../components/HelloWorld.vue";
 import Login from "../components/pages/Login.vue";
 import Signup from "../components/pages/Signup.vue";
-import Post from "../components/pages/Post.vue";
+import Posts from "../components/pages/Posts.vue";
+import NewPost from "../components/pages/NewPost.vue";
 
 const routes = [
   {
@@ -20,7 +21,21 @@ const routes = [
   },
   {
     path: "/posts",
-    component: Post,
+    component: Posts,
+    beforeEnter: (to, from, next) => {
+      const auth = getAuth()
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          next();
+        } else {
+          next('/login');
+        }
+      });
+    }
+  },
+  {
+    path: "/newPost",
+    component: NewPost,
     beforeEnter: (to, from, next) => {
       const auth = getAuth()
       onAuthStateChanged(auth, (user) => {
