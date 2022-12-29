@@ -1,10 +1,13 @@
 <script setup>
 import { reactive } from 'vue';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useRouter } from "vue-router"
 
+const router = useRouter()
 const data = reactive({
   email: "",
   password: "",
+  userName: '',
 });
 
 const auth = getAuth();
@@ -12,12 +15,25 @@ const auth = getAuth();
 const signUp = () => {
   createUserWithEmailAndPassword(auth, data.email, data.password)
     .then((userCredential) => {
+      const user = auth.currentUser;
+      // console.log(userCredential.user.auth)
+      updateProfile(user, {
+        displayName: data.userName
+      });
+      // auth.currentUser.updateProfile(update);
       console.log('登録成功');
     })
     .catch((err) => {
       console.log(err);
     });
+
+    router.push('/login');
 };
+
+// firebase.auth().createUserWithEmailAndPassword(email, password).then((result)=>{
+//         result.user.updateProfile({
+//         displayName:userName
+//         })
 </script>
 
 <template>
@@ -25,7 +41,11 @@ const signUp = () => {
     <h1 class="text-center text-primary">新規会員登録</h1>
   </div>
   <div class="row offset-sm-3 col-sm-6">
-    <div class="form-group">
+    <div class="form-group mt-2">
+        <!-- <label for="userName">お名前</label> -->
+        <input type="text" class="form-control" v-model="data.userName" id="userName" placeholder="お名前">
+    </div>
+    <div class="form-group mt-2">
       <!-- <label for="email">メールアドレス</label> -->
       <input type="email" class="form-control" v-model="data.email" id="inputName" placeholder="メールドレス">
     </div>

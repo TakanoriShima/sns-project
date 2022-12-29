@@ -23,7 +23,7 @@ onValue(ref(db, 'posts/' + props.id), (snapshot) => {
   post['key'] = props.id;
   console.log(post);
   data.post = post;
-  if(auth.currentUser.email === data.post.email){
+  if(auth.currentUser.uid === data.post.uid){
     data.flag = true;
   }
 });
@@ -53,14 +53,14 @@ onValue(ref(db, 'posts/' + props.id), (snapshot) => {
 
 <template>
 <div class="row">
-  <h1 class="text-center text-primary">投稿詳細</h1>
+  <h1 class="text-center text-primary mt-5">投稿詳細</h1>
   <!-- <div>{{ this.$route.params.id }}</div> -->
 </div>
-<div class="row">
+<div class="row mt-2">
     <table class="table table-bordered table-striped">
       <thead>
       <tr>
-        <th>メールアドレス</th>
+        <th>名前</th>
         <th>タイトル</th>
         <th>投稿内容</th>
         <th>画像</th>
@@ -69,7 +69,7 @@ onValue(ref(db, 'posts/' + props.id), (snapshot) => {
     </thead>
     <tbody>
       <tr>
-        <td>{{data.post.email}}</td>
+        <td>{{data.post.name}}</td>
         <td>{{data.post.title}}</td>
         <td>{{data.post.content}}</td>
         <td><img v-bind:src="data.post.image_url" style="width: 100px;"/></td>

@@ -16,11 +16,12 @@ const props = defineProps({
 
 const data = reactive({
   user: '',
-  email: '',
+  uid: '',
+  name: '',
   title: '',
   content: "",
   image_url: "",
-  flag: false
+  flag: false,
 })
 
 data.user = auth.currentUser;
@@ -30,12 +31,13 @@ const RefPost = dRef(db, 'posts/' + props.id);
 
 onValue(RefPost, (snapshot) => {
   let post = snapshot.val();
-  data.email = post.email;
+  data.uid = post.uid;
+  data.name = post.name,
   data.title = post.title;
   data.content = post.content;
   data.image_url = post.image_url;
 
-  if(data.user.email !== data.email){
+  if(data.user.uid !== data.uid){
     router.push('/posts'); 
   }
 });
@@ -65,7 +67,8 @@ const updateMessage = () => {
   console.log(today_str);
   
   let postData = {
-    email: data.email,
+    uid: data.uid,
+    name: data.name,
     title: data.title,
     content: data.content,
     image_url: data.image_url,
@@ -86,9 +89,9 @@ const updateMessage = () => {
 
 <template>
 <div class="row">
-  <h1 class="text-center text-primary">投稿編集</h1>
+  <h1 class="text-center text-primary mt-5">投稿編集</h1>
 </div>
-<div class="row offset-sm-3 col-sm-6">
+<div class="row offset-sm-3 col-sm-6 mt-2">
   <div class="form-group">
     <input type="text" class="form-control" v-model="data.title" id="title" placeholder="タイトル">
   </div>
@@ -98,7 +101,7 @@ const updateMessage = () => {
   <div class="form-group mt-2">
     <label for="image">画像</label>
     <input type="file" class="form-control" @change="uploadFile" id="image">
-    <img v-bind:src="data.image_url" style="width: 100px;"/>
+    <img v-bind:src="data.image_url" style="width: 100px;" class="mt-4"/>
   </div>
   <div class="form-group mt-4">
     <button class="form-control btn btn-primary" @click="updateMessage" id="send" disabled>更新</button>

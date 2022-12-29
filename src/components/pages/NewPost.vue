@@ -44,7 +44,7 @@ const sendMessage = () => {
   let today_str = new Date().toString();
   console.log(today_str);
 
-  push(dRef(db, "posts"), {email: data.user.email, title: data.title, content: data.content, image_url: data.image_url, date: today_str}); // 追加
+  push(dRef(db, "posts"), {uid: data.user.uid, name: data.user.displayName, title: data.title, content: data.content, image_url: data.image_url, date: today_str}); // 追加
 
   data.title = "";
   data.content = "";
@@ -69,7 +69,7 @@ const sendMessage = () => {
   <div class="form-group mt-2">
     <label for="image">画像</label>
     <input type="file" class="form-control" @change="uploadFile" id="image">
-    <img v-bind:src="data.image_url" style="width: 100px;"/>
+    <img v-bind:src="data.image_url" style="width: 100px;" class="mt-4"/>
   </div>
   <div class="form-group mt-4">
     <button class="form-control btn btn-primary" @click="sendMessage" id="send" disabled>投稿</button>
