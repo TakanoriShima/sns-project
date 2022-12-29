@@ -5,6 +5,7 @@ import Login from "../components/pages/Login.vue";
 import Signup from "../components/pages/Signup.vue";
 import Posts from "../components/pages/Posts.vue";
 import NewPost from "../components/pages/NewPost.vue";
+import Post from "../components/pages/Post.vue";
 
 const routes = [
   {
@@ -47,6 +48,22 @@ const routes = [
       });
     }
   },
+  {
+    path: "/posts/:id",
+    component: Post,
+    props: true,
+    beforeEnter: (to, from, next) => {
+      const auth = getAuth()
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          next();
+        } else {
+          next('/login');
+        }
+      });
+    }
+  },
+  
 
 ];
 

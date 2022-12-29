@@ -19,8 +19,13 @@ console.log(auth.currentUser.email);
 
 onValue(ref(db, 'posts'), (snapshot) => {
   data.posts = [];
-  for (const i in snapshot.val()) {
-    data.posts.push(snapshot.val()[i])
+  // console.log(snapshot);
+  for (const key in snapshot.val()) {
+    // console.log(key)
+    // console.log(snapshot.val()[key])
+    let post = snapshot.val()[key];
+    post['key'] = key;
+    data.posts.push(post)
   }
 });
 
@@ -40,26 +45,27 @@ onAuthStateChanged(auth, user => {
 <div class="row">
   <h1 class="text-center text-primary">投稿一覧</h1>
 </div>
-    <div class="message-area">
-        <table class="table table-bordered table-striped">
-          <tr>
-            <th>投稿番号</th>
-            <th>メールアドレス</th>
-            <th>タイトル</th>
-            <th>投稿内容</th>
-            <th>画像</th>
-            <th>投稿日時</th>
-          </tr>
-          <tr v-for="(post, index) in data.posts " :key="index">
-            <td>{{index + 1}}</td>
-            <td>{{post.email}}</td>
-            <td>{{post.title}}</td>
-            <td>{{post.content}}</td>
-            <td><img v-bind:src="post.image_url" style="width: 100px;"/></td>
-            <td>{{post.date}}</td>
-          </tr>
-      </table>
-    </div> 
+<div class="row">
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th>投稿番号</th>
+        <th>メールアドレス</th>
+        <th>タイトル</th>
+        <th>投稿内容</th>
+        <th>画像</th>
+        <th>投稿日時</th>
+      </tr>
+      <tr v-for="(post, index) in data.posts " :key="index">
+        <td><a v-bind:href="'/posts/' + post.key">{{index + 1}}</a></td>
+        <td>{{post.email}}</td>
+        <td>{{post.title}}</td>
+        <td>{{post.content}}</td>
+        <td><img v-bind:src="post.image_url" style="width: 100px;"/></td>
+        <td>{{post.date}}</td>
+      </tr>
+  </table>
+</div>
+ 
 <div v-if="data.isLoggedIn" class="row">
   <button @click="logout" class="offset-sm-3 col-sm-6">ログアウト</button>
 </div>
