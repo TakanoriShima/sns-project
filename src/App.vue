@@ -1,8 +1,12 @@
 <script setup>
+import Header from "./components/Header.vue";
 </script>
 
 <template>
-  <router-view /> <!-- 変更 -->
+  <Header/>
+  <div class="container">    
+    <router-view /> 
+  </div>
 </template>
 
 <style>
@@ -12,6 +16,6 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 </style>

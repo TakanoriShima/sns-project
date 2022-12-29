@@ -37,11 +37,6 @@ const signUp = () => {
       <button class="form-control btn btn-primary" @click="signUp">ユーザーを作成</button>
     </div>
   </div>
-
-  <div class="row">
-    <a href="/">Topへ</a>
-    <a href="/login">Login</a>
-  </div>
 </template>
 
 <style scoped>

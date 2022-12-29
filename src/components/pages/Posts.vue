@@ -46,32 +46,28 @@ onAuthStateChanged(auth, user => {
   <h1 class="text-center text-primary">投稿一覧</h1>
 </div>
 <div class="row">
-    <table class="table table-bordered table-striped">
-      <tr>
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
         <th>投稿番号</th>
         <th>メールアドレス</th>
         <th>タイトル</th>
         <th>投稿内容</th>
-        <th>画像</th>
+        <!-- <th>画像</th> -->
         <th>投稿日時</th>
       </tr>
+    </thead>
+    <tbody>
       <tr v-for="(post, index) in data.posts " :key="index">
         <td><a v-bind:href="'/posts/' + post.key">{{index + 1}}</a></td>
         <td>{{post.email}}</td>
         <td>{{post.title}}</td>
         <td>{{post.content}}</td>
-        <td><img v-bind:src="post.image_url" style="width: 100px;"/></td>
+        <!-- <td><img v-bind:src="post.image_url" style="width: 100px;"/></td> -->
         <td>{{post.date}}</td>
       </tr>
+    </tbody>
   </table>
-</div>
- 
-<div v-if="data.isLoggedIn" class="row">
-  <button @click="logout" class="offset-sm-3 col-sm-6">ログアウト</button>
-</div>
-
-<div class="row">
-  <a href="/newPost" class="btn btn-primary offset-sm-4 col-sm-4">新規投稿</a>
 </div>
 
 </template>

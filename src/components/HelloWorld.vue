@@ -14,18 +14,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="row">
-
-    <h1 class="text-danger text-center">{{ msg }}</h1>
+  <div class="container py-4">
+    <div class="p-5 mb-4 bg-light rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Hello SNS!!</h1>
+        <p class="offset-md-2 col-md-8 fs-4 text-center">みんなで盛り上げよう</p>
+        <button class="btn btn-primary btn-lg" type="button">Example button</button>
+      </div>
+    </div>
   </div>
-  <div class="row mt-3">
-    <!-- <h2 id="test"></h2> -->
-  <a href="/signup" class="offset-sm-2 col-sm-3 btn btn-primary">Signup</a>
-  <a href="/login" class="offset-sm-2 col-sm-3 btn btn-danger">Login</a>
-  </div>
-  <!-- <div class="row">
-    <button type="button" @click="count++" class="btn btn-primary">count is: {{ count }}</button>
-  </div> -->
 </template>
 
 <style scoped>

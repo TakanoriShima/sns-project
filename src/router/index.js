@@ -6,6 +6,7 @@ import Signup from "../components/pages/Signup.vue";
 import Posts from "../components/pages/Posts.vue";
 import NewPost from "../components/pages/NewPost.vue";
 import Post from "../components/pages/Post.vue";
+import DeletePost from "../components/pages/DeletePost.vue";
 
 const routes = [
   {
@@ -51,6 +52,21 @@ const routes = [
   {
     path: "/posts/:id",
     component: Post,
+    props: true,
+    beforeEnter: (to, from, next) => {
+      const auth = getAuth()
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          next();
+        } else {
+          next('/login');
+        }
+      });
+    }
+  },
+  {
+    path: "/posts/:id/delete",
+    component: DeletePost,
     props: true,
     beforeEnter: (to, from, next) => {
       const auth = getAuth()

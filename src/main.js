@@ -2,10 +2,10 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import VueRouter from "./router/index"; // 追加
 
-import "bootstrap/dist/css/bootstrap.min.css" //　追加
-import jQuery from 'jquery'
-global.jquery = jQuery
-global.$ = jQuery
+// import "bootstrap/dist/css/bootstrap.min.css" //　追加
+// import jQuery from 'jquery'
+// global.jquery = jQuery
+// global.$ = jQuery
 // window.$ = window.jQuery = require('jquery')
 
 import { initializeApp } from "firebase/app";

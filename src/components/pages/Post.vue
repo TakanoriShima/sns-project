@@ -4,7 +4,6 @@ import { getDatabase, onValue, ref } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "vue-router"
 
-
 const auth = getAuth();
 const router = useRouter()
 const db = getDatabase();
@@ -19,27 +18,36 @@ const data = reactive({
 })
 
 // console.log(props.id);
-
-onValue(ref(db, 'posts'), (snapshot) => {
-  let post = null;
-  for (const key in snapshot.val()) {
-    if(key === props.id){
-      post = snapshot.val()[key];
-      post['key'] = key;
-      // console.log(post)
-      break;
-    }else{
-      console.log('ng');
-    }
-  }
+onValue(ref(db, 'posts/' + props.id), (snapshot) => {
+  let post = snapshot.val();
+  post['key'] = props.id;
+  console.log(post);
   data.post = post;
-
   if(auth.currentUser.email === data.post.email){
     data.flag = true;
   }
-
-  console.log(post)
 });
+
+// onValue(ref(db, 'posts'), (snapshot) => {
+//   let post = null;
+//   for (const key in snapshot.val()) {
+//     if(key === props.id){
+//       post = snapshot.val()[key];
+//       post['key'] = key;
+//       // console.log(post)
+//       break;
+//     }else{
+//       console.log('ng');
+//     }
+//   }
+//   data.post = post;
+
+//   if(auth.currentUser.email === data.post.email){
+//     data.flag = true;
+//   }
+
+//   console.log(post)
+// });
 
 </script>
 
@@ -50,6 +58,7 @@ onValue(ref(db, 'posts'), (snapshot) => {
 </div>
 <div class="row">
     <table class="table table-bordered table-striped">
+      <thead>
       <tr>
         <th>メールアドレス</th>
         <th>タイトル</th>
@@ -57,6 +66,8 @@ onValue(ref(db, 'posts'), (snapshot) => {
         <th>画像</th>
         <th>投稿日時</th>
       </tr>
+    </thead>
+    <tbody>
       <tr>
         <td>{{data.post.email}}</td>
         <td>{{data.post.title}}</td>
@@ -64,18 +75,14 @@ onValue(ref(db, 'posts'), (snapshot) => {
         <td><img v-bind:src="data.post.image_url" style="width: 100px;"/></td>
         <td>{{data.post.date}}</td>
       </tr>
+    </tbody>
   </table>
 </div> 
 
 <div class="row mt-5" v-if="data.flag">
   <a href="/posts/edit" class="btn btn-success offset-sm-2 col-sm-3">投稿編集</a>
-  <a href="/posts/delete" class="btn btn-danger offset-sm-2 col-sm-3">投稿削除</a>
+  <a v-bind:href="'/posts/' + props.id + '/delete'" class="btn btn-danger offset-sm-2 col-sm-3" onclick="return confirm('削除してよろしいですか？')">投稿削除</a>
 </div>
-
-<div class="row mt-4">
-  <a href="/posts" class="btn btn-primary offset-sm-4 col-sm-4">投稿一覧へ</a>
-</div>
-
 </template>
 
 <style scoped>
