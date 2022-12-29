@@ -80,7 +80,7 @@ onValue(ref(db, 'posts/' + props.id), (snapshot) => {
 </div> 
 
 <div class="row mt-5" v-if="data.flag">
-  <a href="/posts/edit" class="btn btn-success offset-sm-2 col-sm-3">投稿編集</a>
+  <a v-bind:href="'/posts/' + props.id + '/edit'" class="btn btn-success offset-sm-2 col-sm-3">投稿編集</a>
   <a v-bind:href="'/posts/' + props.id + '/delete'" class="btn btn-danger offset-sm-2 col-sm-3" onclick="return confirm('削除してよろしいですか？')">投稿削除</a>
 </div>
 </template>
