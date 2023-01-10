@@ -18,7 +18,8 @@ const signUp = () => {
       const user = auth.currentUser;
       // console.log(userCredential.user.auth)
       updateProfile(user, {
-        displayName: data.userName
+        displayName: data.userName,
+        photoURL: "no_image.png",
       });
       // auth.currentUser.updateProfile(update);
       console.log('登録成功');

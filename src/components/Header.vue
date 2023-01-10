@@ -7,8 +7,13 @@ const auth = getAuth();
 const router = useRouter();
 const login_flag = ref(false);
 
+const data = reactive({
+  user: Object,
+});
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
+    data.user = user;
     login_flag.value = true;
   } else {
     login_flag.value = false;
@@ -32,7 +37,11 @@ const logout = () => {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li v-if="login_flag" class="nav-item">
-          <a href="#" class="nav-link">プロフィール編集</a>
+          <a class="nav-link">{{ data.user.displayName }}</a>
+        </li>
+        <li v-if="login_flag"><img v-bind:src="data.user.photoURL" style="width: 4git 0px;"/></li>
+        <li v-if="login_flag" class="nav-item">
+          <a href="/profile/edit" class="nav-link">プロフィール編集</a>
         </li>
         <li v-if="login_flag" class="nav-item">
           <a href="/newPost" class="nav-link">新規投稿</a>

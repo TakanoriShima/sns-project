@@ -8,6 +8,7 @@ import NewPost from "../components/pages/NewPost.vue";
 import Post from "../components/pages/Post.vue";
 import DeletePost from "../components/pages/DeletePost.vue";
 import EditPost from "../components/pages/EditPost.vue";
+import ProfileEdit from "../components/pages/ProfileEdit.vue";
 
 const routes = [
   {
@@ -95,8 +96,21 @@ const routes = [
       });
     }
   },
-  
-
+  {
+    path: "/profile/edit",
+    component: ProfileEdit,
+    props: true,
+    beforeEnter: (to, from, next) => {
+      const auth = getAuth()
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          next();
+        } else {
+          next('/login');
+        }
+      });
+    }
+  },
 ];
 
 
