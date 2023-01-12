@@ -39,7 +39,7 @@ const logout = () => {
         <li v-if="login_flag" class="nav-item">
           <a class="nav-link">{{ data.user.displayName }}</a>
         </li>
-        <li v-if="login_flag"><img v-bind:src="data.user.photoURL" style="width: 4git 0px;"/></li>
+        <li v-if="login_flag"><img v-bind:src="data.user.photoURL" style="width: 40px;"/></li>
         <li v-if="login_flag" class="nav-item">
           <a href="/profile/edit" class="nav-link">プロフィール編集</a>
         </li>
